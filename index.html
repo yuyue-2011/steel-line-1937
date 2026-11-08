@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>钢铁防线 1937–1945 · 五大战场（V1.8.1 · 45战）</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- 标题屏 -->
+  <div id="scr-title" class="screen">
+    <div class="paper title-card">
+      <div class="seal">铁</div>
+      <div class="title-ornaments" aria-hidden="true">
+        <i class="tn-star">★</i><i class="tn-wheat">✦</i><i class="tn-star">★</i>
+      </div>
+      <h1>钢铁防线</h1>
+      <div class="subtitle">STEEL LINE · 1937 — 1945</div>
+      <div class="title-ribbon">
+        <span class="tr-wing">✦</span><span class="tr-text">卫 国 战 争 · 胜 利 之 路</span><span class="tr-wing">✦</span>
+      </div>
+      <div class="chapter">V 1 . 8 . 1</div>
+      <div class="menu">
+        <button id="btn-campaign" class="btn big">出　征</button>
+        <button id="btn-shop" class="btn">军需处</button>
+        <button id="btn-almanac" class="btn">前线手册</button>
+        <button id="btn-set" class="btn">设　置</button>
+        <button id="btn-save" class="btn">存档管理</button>
+        <button id="btn-help" class="btn">玩法说明</button>
+      </div>
+      <div id="title-honors" class="honors">战功</div>
+      <div class="foot">本作以史实为骨、娱乐为皮 · 无血化处理 · 反法西斯立场<br>谨以此致敬所有守土之人</div>
+    </div>
+  </div>
+
+  <!-- 军需处 -->
+  <div id="scr-shop" class="screen hidden">
+    <div class="paper panel" id="shop-body"></div>
+  </div>
+
+  <!-- 战争时钟（关卡选择） -->
+  <div id="scr-clock" class="screen hidden">
+    <div class="paper panel">
+      <h2>战争时钟 · 1937.10 — 1945.5</h2>
+      <div class="clock-line"><i></i></div>
+      <div id="clock-cards"></div>
+      <div class="row-end">
+        <button id="btn-clock-back" class="btn">返回</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 存档管理 -->
+  <div id="scr-save" class="screen hidden">
+    <div class="paper panel">
+      <h2>存档管理</h2>
+      <div id="save-summary" class="save-summary"></div>
+      <h4>导出存档码</h4>
+      <textarea id="save-export" readonly rows="4" spellcheck="false"></textarea>
+      <div class="row-inline"><button id="btn-save-copy" class="btn small">复制存档码</button>
+        <span class="set-note">换设备/换浏览器时：这里复制 → 目标设备粘贴导入。</span></div>
+      <h4>导入存档码</h4>
+      <textarea id="save-import" rows="4" spellcheck="false" placeholder="粘贴以 IRONSJ1. 开头的存档码"></textarea>
+      <div class="row-inline"><button id="btn-save-import" class="btn small">导入并生效</button>
+        <span class="set-note">导入会覆盖当前进度（导入后自动迁移到最新版本）。</span></div>
+      <div id="save-msg"></div>
+      <h4>危险操作</h4>
+      <div class="row-inline"><button id="btn-save-restore" class="btn small">从备份一键复原存档</button>
+        <button id="btn-save-reset" class="btn small danger">清空存档</button>
+        <span class="set-note">「备份」= 上一次自动保存的旧档（每次进度变化自动转存）；连点两次才会生效。</span></div>
+      <div class="row-end"><button id="btn-save-back" class="btn">返回</button></div>
+    </div>
+  </div>
+
+  <!-- 设置：性能与显示 -->
+  <div id="scr-set" class="screen hidden">
+    <div class="paper panel">
+      <h2>设置 · 性能与显示</h2>
+      <div class="set-row"><label>画质</label>
+        <div class="set-opts" id="set-quality">
+          <button data-v="high" class="btn small">高（全特效）</button>
+          <button data-v="med" class="btn small">中（减粒子）</button>
+          <button data-v="low" class="btn small">低（纯战斗）</button>
+        </div></div>
+      <div class="set-row"><label>敌军血条</label>
+        <div class="set-opts" id="set-bars">
+          <button data-v="always" class="btn small">常显</button>
+          <button data-v="damaged" class="btn small">受损时显示</button>
+        </div></div>
+      <div class="set-row"><label>帧率上限</label>
+        <div class="set-opts" id="set-fps">
+          <button data-v="0" class="btn small">不限制</button>
+          <button data-v="30" class="btn small">30帧（省电/弱机）</button>
+        </div></div>
+      <div class="set-row"><label>打击特效</label>
+        <div class="set-opts" id="set-fx">
+          <button data-v="1" class="btn small">开</button>
+          <button data-v="0" class="btn small">关</button>
+        </div></div>
+      <div class="set-row"><label>可选跳关</label>
+        <div class="set-opts" id="set-unlock">
+          <button data-v="1" class="btn small">全关解锁（时钟任意开打）</button>
+          <button data-v="0" class="btn small">按进度解锁（默认）</button>
+        </div></div>
+      <div class="set-row"><label>进度跳关</label>
+        <div class="set-opts">
+          <select id="set-jump-level" class="set-select"></select>
+          <button id="btn-set-jump" class="btn small">解锁到此关</button>
+          <button id="btn-set-undo" class="btn small danger">撤销跳关</button>
+        </div>
+        <div id="set-jump-msg" class="set-msg" style="margin-left:0;"></div></div>
+      <div class="set-row"><label>缴获物资</label>
+        <div class="set-opts">
+          <input id="set-salvage-input" type="number" min="0" max="99999" step="50" value="500">
+          <button id="btn-set-salvage" class="btn small">领取到账</button>
+        </div>
+        <div id="set-salvage-msg" class="set-msg" style="margin-left:0;"></div></div>
+      <div class="set-row"><label>一键复原</label>
+        <div class="set-opts">
+          <button id="btn-set-reset" class="btn small danger">一键复原默认设置</button>
+        </div>
+        <div id="set-reset-msg" class="set-msg" style="margin-left:0;"></div></div>
+      <div class="set-note">改动即时保存（本机生效）；「画质」影响雪花/波纹/烟尘粒子与装饰特效。地形静态层已离屏缓存，弱机建议「中」+30帧。「全关解锁/跳关/领取缴获」均为便利功能，不影响勋章与战果结算；存档的备份/清空在「存档管理」。</div>
+      <div class="row-end"><button id="btn-set-back" class="btn">返回</button></div>
+    </div>
+  </div>
+
+  <!-- 战报（简报屏） -->
+  <div id="scr-brief" class="screen hidden">
+    <div class="paper panel" id="brief-body"></div>
+  </div>
+
+  <!-- 前线手册 -->
+  <div id="scr-almanac" class="screen hidden">
+    <div class="paper panel wide">
+      <h2>前线手册</h2>
+      <div class="tabs">
+        <button id="tab-def" class="tab on">我方守军</button>
+        <button id="tab-en" class="tab">敌方序列</button>
+      </div>
+      <div id="almanac-grid" class="almanac-grid"></div>
+      <div id="almanac-detail" class="almanac-detail"></div>
+      <div class="row-end">
+        <button id="btn-almanac-back" class="btn">返回</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 玩法说明 -->
+  <div id="scr-help" class="screen hidden">
+    <div class="paper panel">
+      <h2>玩法说明</h2>
+      <ol class="help">
+        <li>点击从天而降的<b>补给包裹</b>即可收集补给（数值显示在左上角）。</li>
+        <li>点选下方<b>兵种卡</b>，再点击阵地格子部署；每张卡部署后有冷却。数字键 <b>1-9/0</b> 可快速选卡。</li>
+        <li><b>敌军头顶常显血条</b>（门板盾为蓝白细条）；己方单位<b>受损后</b>也会显示血条。</li>
+        <li>每关战报可自选<b>三档难度</b>：练兵（宽松）/ 实战（标准）/ 精锐（高强度+首克授纪念章）。</li>
+        <li>敌军突入阵地左端时，每行待命的<b>反冲击小队</b>会自动清空该行——但一行只有一次。</li>
+        <li><b>工兵铲</b>（右上）可拆除己方部署（不返还补给），也能掀掉敌军搭上的竹梯。</li>
+        <li><b>水道</b>需先铺「门桥浮台」才能布设兵种；<b>夜战</b>关卡空投稀少，补给要省着用。</li>
+        <li><b>高跷兵</b>蹦得过工事却折在城墙碉垒前；<b>掘进工兵</b>钻地绕后会从左往右拆家；<b>装甲推土车</b>只有反坦克地刺治得了。</li>
+        <li>歼敌可获<b>缴获</b>，进「军需处」换永久军备升级；<b>存档管理</b>可导出/导入存档码换设备续玩。</li>
+        <li>莫斯科篇换<b>德军</b>对手：M35钢盔掷弹兵、强击群、四号坦克与黄蜂自行火炮；你将获得DP-27三线机枪、燃烧瓶组、喀秋莎、PTRD反坦克枪、黑海水兵班与巴甫洛夫楼据点。</li>
+        <li><b>黄蜂自行火炮</b>停在右缘轰你的工事——直射够不到时用迫击炮/燃烧瓶曲射或喀秋莎洗掉它；<b>冲锋舟</b>会跃过第一道工事，水兵班可直接下水拦截。</li>
+        <li>反攻三部曲：天王星（罗军溃兵海量冲阵，<b>巷战哨组</b>双向射击）→ 指环行动（夜战收网，<b>ML-20重榴弹炮</b>大溅射）→ 库尔斯克（<b>虎式坦克</b>正面重甲，交SU-152曲射「动物园管理员」或反坦克地刺）。</li>
+        <li>西进五战：第聂伯河抢滩（<b>波波沙</b>泼弹）→ 科尔松收口（<b>缴获清点队</b>躺赚缴获）→ 巴格拉季昂（<b>斐迪南</b>最硬壳，BS-3/ZiS-3点名）→ 雅西崩解 → 维斯瓦冰解（<b>黑豹</b>登场）→ 塞洛攻坚（<b>IS-2</b>拆山头）→ 柏林（<b>伊尔-2校射哨</b>整行扫射，胜利旗上国会大厦）。</li>
+        <li>五大战场按真实日期穿插（V1.8.1）：中国 → 苏德之间，<b>北非篇</b>（阿拉曼盒子/阿拉姆哈勒法矛头之夜与装甲撞墙）与<b>太平洋篇</b>（伊鲁河口夜袭/血岭之夜/沙洲万岁）逐日插回主线；<b>西欧篇</b>（巴斯托涅被围/Nuts!/巴顿解围/雷马根夺桥）插在维斯瓦与塞洛之间。</li>
+        <li>胜利之路十战：雪峰山追歼 → 柳州反攻 → 远东风暴 → <b>东京湾胜利日</b>——受降签字只是开端，DLC 时间线插槽（敦刻尔克/比尔哈凯姆/常德/科希马/衡阳/阿纳姆/南洋孤军……）敬请期待。</li>
+        <li>设置里可用<b>进度跳关</b>（解锁到第N关或全关解锁，已通关可随时重打）、<b>一键复原默认设置</b>、<b>自选数量领取缴获</b>；存档自动备份，存档管理里可一键复原到上一进度。</li>
+        <li>扛旗敌兵出现即<b>「大规模进攻！」</b>——那是最后一波。</li>
+      </ol>
+      <div class="row-end">
+        <button id="btn-help-back" class="btn">返回</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 战斗屏 -->
+  <div id="scr-battle" class="screen hidden">
+    <div id="hud">
+      <div id="sun-box">
+        <div id="sun-count">0</div>
+        <div class="sun-label">补给</div>
+      </div>
+      <div id="slots"></div>
+      <div id="hud-right">
+        <button id="btn-shovel" class="tool" title="工兵铲：拆除部署/掀竹梯">铲</button>
+        <button id="btn-manual" class="tool" title="前线手册">册</button>
+        <button id="btn-pause" class="tool" title="暂停">停</button>
+      </div>
+    </div>
+    <div id="battle-wrap">
+      <canvas id="cv" width="960" height="542"></canvas>
+      <div id="banner"></div>
+      <div id="countdown"></div>
+      <div id="progress"><div id="prog-fill"></div><div id="prog-flags"></div></div>
+    </div>
+    <div id="battle-tip">提示</div>
+  </div>
+
+  <!-- 暂停 -->
+  <div id="ov-pause" class="screen overlay hidden">
+    <div class="paper panel small">
+      <h2>暂　停</h2>
+      <div class="menu">
+        <button id="btn-resume" class="btn big">继续作战</button>
+        <button id="btn-restart" class="btn">重新开始</button>
+        <button id="btn-pause-manual" class="btn">前线手册</button>
+        <button id="btn-quit" class="btn">撤回时钟</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 结算 -->
+  <div id="scr-result" class="screen overlay hidden">
+    <div class="paper panel small" id="result-body"></div>
+  </div>
+
+</div>
+<script src="data.js"></script>
+<script src="sprites.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
