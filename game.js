@@ -1441,7 +1441,7 @@ function buildClock(){
       '<div class="m-date">DLC · 时间线插槽</div>' +
       '<div class="m-title">后续战役 · 敬请期待</div>' +
       '<div class="m-sub">敦刻尔克 1940.5 · 比尔哈凯姆 · 常德 1943.11 · 科希马 · 衡阳 · 阿纳姆 · 南洋孤军…… 新战线正在勘察</div>' +
-      '<div class="m-state"><span class="diff-tag">V1.8.1 敬请期待</span></div>';
+      '<div class="m-state"><span class="diff-tag">V1.8.2 敬请期待</span></div>';
     wrap.appendChild(tea);
   }
   $('btn-clock-shop').addEventListener('click', () => openShop('clock'));

@@ -57,6 +57,20 @@ h2 { font-family:"KaiTi","STKaiti","Kaiti SC","SimKai",serif; font-size:28px; le
 .btn.big { font-size:24px; padding:12px 46px; }
 .foot { margin-top:22px; font-size:11.5px; color:#6b5636; line-height:1.8; }
 
+/* ---- V1.8.2：标题屏仓库 / 在线试玩入口 ---- */
+.repo-line {
+  margin-top:10px; font-size:11.5px; line-height:1.8; letter-spacing:.5px; color:#6b5636;
+}
+.repo-link {
+  color:#6b5636; text-decoration:none;
+  border-bottom:1px dashed rgba(107,86,54,.55); padding-bottom:1px;
+  transition:color .12s, border-color .12s;
+}
+.repo-link:visited { color:#6b5636; }
+.repo-link:hover { color:#a63a2b; border-bottom-color:#a63a2b; }
+.repo-ico { color:#a63a2b; font-size:9px; margin-right:4px; vertical-align:1px; }
+.repo-sep { margin:0 7px; opacity:.55; }
+
 /* ---- 战争时钟 ---- */
 .clock-line { height:6px; background:#241d15; margin:10px 2px 22px; position:relative; }
 .clock-line i { position:absolute; left:0; top:0; height:6px; background:#a63a2b; width:0; transition:width .6s; }
