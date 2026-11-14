@@ -10,7 +10,7 @@
 | | |
 |---|---|
 | 🎮 在线试玩 | https://yuyue-2011.github.io/steel-line-1937/ |
-| ⬇️ 单文件下载 | [Releases](https://github.com/yuyue-2011/steel-line-1937/releases/latest)（`钢铁防线 V1.8.2.html`，304 KB，离线可玩） |
+| ⬇️ 单文件下载 | [Releases](https://github.com/yuyue-2011/steel-line-1937/releases/latest)（`steel-line-1937-v1.8.2.html`，305 KB，离线可玩） |
 | 📋 设计与测试记录 | [半归档清单.md](半归档清单.md) |
 
 ---
@@ -41,7 +41,7 @@
 
 **① 在线玩**：打开 https://yuyue-2011.github.io/steel-line-1937/
 
-**② 单文件离线版**：到 [Releases](https://github.com/yuyue-2011/steel-line-1937/releases/latest) 下载 `钢铁防线 V1.8.2.html`，双击即可，无需联网、无需同目录资源。
+**② 单文件离线版**：到 [Releases](https://github.com/yuyue-2011/steel-line-1937/releases/latest) 下载 `steel-line-1937-v1.8.2.html`，双击即可，无需联网、无需同目录资源。
 
 **③ 源码运行**：克隆或下载本仓库，直接用浏览器打开 `index.html`（推荐桌面 Chrome / Edge / Firefox）。没有 `npm install`，没有 dev server。
 
